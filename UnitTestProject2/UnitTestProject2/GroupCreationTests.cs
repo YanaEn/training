@@ -58,7 +58,8 @@ namespace WebAddressBookTests
 
         private void Logout()
         {
-            driver.FindElement(By.LinkText("Logout")).Click();
+            var logout = new Logout(driver);
+            logout.PerformLogout();
         }
 
         private void ReturnToGroupsPage()
