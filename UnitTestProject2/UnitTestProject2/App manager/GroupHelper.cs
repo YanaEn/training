@@ -43,5 +43,26 @@ namespace WebAddressBookTests
             driver.FindElement(By.Name("submit")).Click();
             return this;
         }
+
+        public GroupHelper SelectGroup()
+        {
+            driver.FindElement(By.Name("selected[]")).Click();
+            return this;
+        }
+        public GroupHelper RedactorGroup()
+        {
+            driver.FindElement(By.Name("edit")).Click();
+            return this;
+        }
+        public GroupHelper UpdateGroup()
+        {
+            driver.FindElement(By.Name("update")).Click();
+            return this;
+        }
+        public GroupHelper DeleteGroup()
+        {
+            driver.FindElement(By.Name("delete")).Click();
+            return this;
+        }
     }
 }

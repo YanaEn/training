@@ -152,8 +152,12 @@
     <Compile Include="App manager\LoginHelper.cs" />
     <Compile Include="App manager\NavigationHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tests\GroupCreationTests.cs" />
-    <Compile Include="Tests\ContactAddTests.cs" />
+    <Compile Include="Tests\Contact\ContactDeleteTests.cs" />
+    <Compile Include="Tests\Contact\ContactEditTests.cs" />
+    <Compile Include="Tests\Group\GroupCreationTests.cs" />
+    <Compile Include="Tests\Contact\ContactAddTests.cs" />
+    <Compile Include="Tests\Group\GroupDeleteTests.cs" />
+    <Compile Include="Tests\Group\GroupEditTests.cs" />
     <Compile Include="Tests\TestBase.cs" />
   </ItemGroup>
   <ItemGroup>

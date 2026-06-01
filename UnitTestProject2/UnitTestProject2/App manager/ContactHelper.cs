@@ -32,5 +32,28 @@ namespace WebAddressBookTests
             driver.FindElement(By.Name("lastname")).SendKeys(contact.Lastname);
             return this;
         }
+
+        public ContactHelper SelectContact(string contactId)
+        {
+            new WebDriverWait(driver, TimeSpan.FromSeconds(35))
+       .Until(d => d.FindElement(By.Id(contactId))).Click();
+            return this;
+        }
+        public ContactHelper OpenEditPage()
+        {
+            driver.FindElement(By.XPath("//img[@alt='Edit']")).Click();
+            return this;
+        }
+
+        public ContactHelper UpdateContact()
+        {
+            driver.FindElement(By.XPath("//div[@id='content']/form/input[20]")).Click();
+            return this;
+        }
+        public ContactHelper DeleteContact()
+        {
+            driver.FindElement(By.Name("delete")).Click();
+            return this;
+        }
     }
 }

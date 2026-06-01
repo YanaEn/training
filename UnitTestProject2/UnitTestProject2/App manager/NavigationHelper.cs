@@ -19,11 +19,14 @@ namespace WebAddressBookTests
         }
         public void GoToAddNewContact()
         {
-            driver.FindElement(By.LinkText("add new")).Click();
+        driver.FindElement(By.LinkText("add new")).Click();
         }
+        
         public void GoToGroupsPage()
         {
-            driver.FindElement(By.LinkText("groups")).Click();
+            new WebDriverWait(driver, TimeSpan.FromSeconds(35))
+        .Until(d => d.FindElement(By.LinkText("groups"))).Click();
+            //driver.FindElement(By.LinkText("groups")).Click();
         }
         public void OpenHomePage()
         {
