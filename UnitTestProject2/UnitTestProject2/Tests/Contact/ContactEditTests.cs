@@ -15,7 +15,6 @@ namespace WebAddressBookTests
         public void ContactEditTests()
         {
             app.Contact
-                .SelectContact("7")
                 .OpenEditPage() 
                 .Contact(new ContactData("1112", "2223"))
                 .UpdateContact();   

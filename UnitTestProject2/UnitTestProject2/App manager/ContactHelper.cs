@@ -33,15 +33,10 @@ namespace WebAddressBookTests
             return this;
         }
 
-        public ContactHelper SelectContact(string contactId)
-        {
-            new WebDriverWait(driver, TimeSpan.FromSeconds(35))
-       .Until(d => d.FindElement(By.Id(contactId))).Click();
-            return this;
-        }
         public ContactHelper OpenEditPage()
         {
-            driver.FindElement(By.XPath("//img[@alt='Edit']")).Click();
+            new WebDriverWait(driver, TimeSpan.FromSeconds(35))
+       .Until(d => d.FindElement(By.XPath("//img[@alt='Edit']"))).Click();
             return this;
         }
 

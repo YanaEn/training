@@ -15,7 +15,7 @@ namespace WebAddressBookTests
         public void ContactDeleteTests()
         {
             app.Contact
-                .SelectContact("4")
+              .OpenEditPage()
                 .DeleteContact();
             app.Navigator.OpenHomePage();
             app.Auth.Logout();

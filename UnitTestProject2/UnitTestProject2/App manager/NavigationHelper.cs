@@ -26,7 +26,6 @@ namespace WebAddressBookTests
         {
             new WebDriverWait(driver, TimeSpan.FromSeconds(35))
         .Until(d => d.FindElement(By.LinkText("groups"))).Click();
-            //driver.FindElement(By.LinkText("groups")).Click();
         }
         public void OpenHomePage()
         {
