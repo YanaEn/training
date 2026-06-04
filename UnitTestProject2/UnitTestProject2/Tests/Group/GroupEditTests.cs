@@ -8,7 +8,7 @@ using System.Threading;
 namespace WebAddressBookTests
 {
     [TestFixture]
-    public class GroupEditTests : TestBase
+    public class GroupEditTests : AuthTestBase
     {
 
 
@@ -25,7 +25,7 @@ namespace WebAddressBookTests
                 .FillGroupForm(group)
                 .UpdateGroup()  
                 .ReturnToGroupsPage();
-            app.Auth.Logout();
+         //   app.Auth.Logout();
         }
     }
 }

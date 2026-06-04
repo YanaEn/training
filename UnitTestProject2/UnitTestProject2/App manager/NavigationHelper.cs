@@ -24,11 +24,19 @@ namespace WebAddressBookTests
         
         public void GoToGroupsPage()
         {
-            new WebDriverWait(driver, TimeSpan.FromSeconds(35))
-        .Until(d => d.FindElement(By.LinkText("groups"))).Click();
+            if (driver.Url == baseUrl + "group.php"
+                && IsElementPresent(By.Name("new")))
+            {
+                return;
+            }
+            driver.FindElement(By.LinkText("groups")).Click();
         }
         public void OpenHomePage()
         {
+            if (driver.Url == baseUrl)
+            {
+                return;
+            }
             driver.Navigate().GoToUrl(baseUrl);
         }
     }

@@ -8,7 +8,7 @@ using System.Threading;
 namespace WebAddressBookTests
 {
     [TestFixture]
-    public class GroupDeleteTests : TestBase
+    public class GroupDeleteTests : AuthTestBase
     {
 
 
@@ -23,7 +23,7 @@ namespace WebAddressBookTests
                 .SelectGroup()  
                 .DeleteGroup()    
                 .ReturnToGroupsPage();
-            app.Auth.Logout();
+          //  app.Auth.Logout();
         }
     }
 }
