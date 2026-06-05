@@ -1,8 +1,9 @@
-﻿using System;
+﻿using NUnit.Framework;
+using OpenQA.Selenium;
+using System;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
-using NUnit.Framework;
 
 namespace WebAddressBookTests
 {
@@ -14,11 +15,15 @@ namespace WebAddressBookTests
         [Test]
         public void ContactDeleteTests()
         {
-            app.Contact
-              .OpenEditPage()
-                .DeleteContact();
+            ContactData contact1 = new ContactData("1112", "2223");
+            if (!app.Contact.IsElementPresent(By.XPath("//img[@alt='Edit']")))
+            {
+                app.Navigator.GoToAddNewContact();
+                app.Contact.AddContact(contact1);
+                app.Navigator.OpenHomePage();
+            }
+            app.Contact.DeleteFirstContact();
             app.Navigator.OpenHomePage();
-          //  app.Auth.Logout();
 
         }
     }

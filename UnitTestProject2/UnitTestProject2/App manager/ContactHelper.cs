@@ -46,5 +46,25 @@ namespace WebAddressBookTests
             driver.FindElement(By.Name("delete")).Click();
             return this;
         }
+        public ContactHelper EditFirstContact(ContactData contact)
+        {
+                OpenEditPage()
+                .Contact(contact)
+                .UpdateContact();
+            return this;
+        }
+        public ContactHelper AddContact(ContactData contact)
+        {
+            Contact(contact)
+                .SaveContact();
+            return this;
+        }
+        public ContactHelper DeleteFirstContact()
+        {
+            OpenEditPage()
+                .DeleteContact();
+            return this;
+        }
     }
-}
+    
+    }

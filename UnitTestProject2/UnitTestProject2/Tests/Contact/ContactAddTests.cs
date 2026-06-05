@@ -14,10 +14,9 @@ namespace WebAddressBookTests
     [Test]
     public void ContactAddTests()
         {
+            ContactData contact1 = new ContactData("1112", "2223");
             app.Navigator.GoToAddNewContact();
-            app.Contact
-                .Contact(new ContactData("111","222"))
-                .SaveContact();
+            app.Contact.AddContact(contact1);
             app.Navigator.OpenHomePage();
          //   app.Auth.Logout(); 
 

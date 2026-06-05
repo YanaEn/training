@@ -19,12 +19,7 @@ namespace WebAddressBookTests
             GroupData group = new GroupData("name1");
             group.Header = "header1";
             group.Footer = "footer1";
-            app.Group
-                .InitGroupCreation()
-                .FillGroupForm(group)
-                .SabmitGroupCreation()
-                .ReturnToGroupsPage();
-         //   app.Auth.Logout();
+            app.Group.CreateGroup(group);
         }   
     }
 }

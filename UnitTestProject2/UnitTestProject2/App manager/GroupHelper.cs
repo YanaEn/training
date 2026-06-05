@@ -61,5 +61,29 @@ namespace WebAddressBookTests
             driver.FindElement(By.Name("delete")).Click();
             return this;
         }
+        public GroupHelper CreateGroup(GroupData group)
+        {
+            InitGroupCreation()
+                .FillGroupForm(group)
+                .SabmitGroupCreation()
+                .ReturnToGroupsPage();
+            return this;
+        }
+        public GroupHelper EditFirstGroup(GroupData group)
+        {
+            SelectGroup()
+                .RedactorGroup()
+                .FillGroupForm(group)
+                .UpdateGroup()
+                .ReturnToGroupsPage();
+            return this;
+        }
+        public GroupHelper DeleteFirstGroup()
+        {
+            SelectGroup()
+                .DeleteGroup()
+                .ReturnToGroupsPage();
+            return this;
+        }
     }
 }

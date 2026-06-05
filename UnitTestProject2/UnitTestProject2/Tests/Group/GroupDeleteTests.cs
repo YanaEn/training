@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using OpenQA.Selenium;
 using System;
 using System.IO;
 using System.Text;
@@ -16,14 +17,15 @@ namespace WebAddressBookTests
         public void GroupDeleteTest()
         {
             app.Navigator.GoToGroupsPage();
-            GroupData group = new GroupData("name2");
-            group.Header = "header2";
-            group.Footer = "footer2";
-            app.Group
-                .SelectGroup()  
-                .DeleteGroup()    
-                .ReturnToGroupsPage();
-          //  app.Auth.Logout();
+            GroupData group = new GroupData("name1");
+            group.Header = "header1";
+            group.Footer = "footer1";
+            if (!app.Group.IsElementPresent(By.Name("selected[]")))
+            {
+                app.Group.CreateGroup(group);
+            }
+            app.Navigator.GoToGroupsPage();
+            app.Group.DeleteFirstGroup();
         }
     }
 }
