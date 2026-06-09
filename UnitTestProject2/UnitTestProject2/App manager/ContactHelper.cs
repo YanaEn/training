@@ -65,6 +65,21 @@ namespace WebAddressBookTests
                 .DeleteContact();
             return this;
         }
+        public List<ContactData> GetContactList()
+        {
+            List<ContactData> contacts = new List<ContactData>();
+            ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("tr[name='entry']"));
+            foreach (IWebElement element in elements)
+            {
+                var cells = element.FindElements(By.TagName("td"));
+
+                string firstname = cells[2].Text.Trim();
+                string lastname = cells[1].Text.Trim();
+
+                contacts.Add(new ContactData(firstname, lastname));
+            }
+            return contacts;
+        }
     }
     
     }

@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using OpenQA.Selenium;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -23,9 +24,17 @@ namespace WebAddressBookTests
             if (!app.Group.IsElementPresent(By.Name("selected[]")))
             {
                 app.Group.CreateGroup(group);
+                
             }
             app.Navigator.GoToGroupsPage();
+            List<GroupData> oldGroups = app.Group.GetGroupList();
             app.Group.DeleteFirstGroup();
+
+            List<GroupData> newGroups = app.Group.GetGroupList();
+            oldGroups.RemoveAt(0);
+            oldGroups.Sort();
+            newGroups.Sort();
+            Assert.That(oldGroups, Is.EquivalentTo(newGroups));
         }
     }
 }

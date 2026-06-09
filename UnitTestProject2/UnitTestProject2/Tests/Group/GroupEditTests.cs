@@ -2,6 +2,7 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -23,12 +24,23 @@ namespace WebAddressBookTests
             GroupData group = new GroupData("name1");
             group.Header = "header1";
             group.Footer = "footer1";
+
+            
+
             if (!app.Group.IsElementPresent(By.Name("selected[]")))
             {
                 app.Group.CreateGroup(group);
             }
             app.Navigator.GoToGroupsPage();
+            List<GroupData> oldGroups = app.Group.GetGroupList();
             app.Group.EditFirstGroup(group2);
+
+            List<GroupData> newGroups = app.Group.GetGroupList();
+            oldGroups[0].Name = group2.Name;
+            oldGroups.Sort();
+            newGroups.Sort();
+
+            Assert.That(oldGroups, Is.EquivalentTo(newGroups));
 
         }
     }
