@@ -21,7 +21,7 @@ namespace WebAddressBookTests
             GroupData group = new GroupData("name1");
             group.Header = "header1";
             group.Footer = "footer1";
-            if (!app.Group.IsElementPresent(By.Name("selected[]")))
+            if (!app.Group.IsAnyGroupSelected())
             {
                 app.Group.CreateGroup(group);
                 

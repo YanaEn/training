@@ -97,5 +97,9 @@ namespace WebAddressBookTests
             }
             return groups;
         }
+        public bool IsAnyGroupSelected()
+        {
+            return driver.FindElements(By.Name("selected[]")).Count > 0;
+        }
     }
 }

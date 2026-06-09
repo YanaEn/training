@@ -27,7 +27,7 @@ namespace WebAddressBookTests
 
             
 
-            if (!app.Group.IsElementPresent(By.Name("selected[]")))
+            if (!app.Group.IsAnyGroupSelected())
             {
                 app.Group.CreateGroup(group);
             }

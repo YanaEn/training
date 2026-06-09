@@ -19,7 +19,7 @@ namespace WebAddressBookTests
         {
             ContactData contact1 = new ContactData("1112", "2223");
             ContactData contact2 = new ContactData("111", "222");
-            if (!app.Contact.IsElementPresent(By.XPath("//img[@alt='Edit']")))
+            if (!app.Contact.IsAnyContactSelected())
             {
                 app.Navigator.GoToAddNewContact();
                 app.Contact.AddContact(contact1);

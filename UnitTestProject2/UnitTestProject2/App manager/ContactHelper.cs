@@ -80,6 +80,10 @@ namespace WebAddressBookTests
             }
             return contacts;
         }
+        public bool IsAnyContactSelected()
+        {
+            return driver.FindElements(By.XPath("//img[@alt='Edit']")).Count > 0;
+        }
     }
     
     }
