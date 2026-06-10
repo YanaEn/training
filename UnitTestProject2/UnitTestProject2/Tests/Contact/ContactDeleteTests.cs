@@ -27,6 +27,7 @@ namespace WebAddressBookTests
             List<ContactData> oldContacts = app.Contact.GetContactList();
             app.Contact.DeleteFirstContact();
             app.Navigator.OpenHomePage();
+            Assert.That(app.Contact.GetContactCount(), Is.EqualTo(oldContacts.Count - 1));
             List<ContactData> newContacts = app.Contact.GetContactList();
             oldContacts.RemoveAt(0);
             oldContacts.Sort();

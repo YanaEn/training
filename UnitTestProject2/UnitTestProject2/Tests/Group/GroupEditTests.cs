@@ -34,6 +34,7 @@ namespace WebAddressBookTests
             app.Navigator.GoToGroupsPage();
             List<GroupData> oldGroups = app.Group.GetGroupList();
             app.Group.EditFirstGroup(group2);
+            Assert.That(app.Group.GetGroupCount(), Is.EqualTo(oldGroups.Count));
 
             List<GroupData> newGroups = app.Group.GetGroupList();
             oldGroups[0].Name = group2.Name;

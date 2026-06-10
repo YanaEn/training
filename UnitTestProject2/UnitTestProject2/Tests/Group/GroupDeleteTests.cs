@@ -29,6 +29,7 @@ namespace WebAddressBookTests
             app.Navigator.GoToGroupsPage();
             List<GroupData> oldGroups = app.Group.GetGroupList();
             app.Group.DeleteFirstGroup();
+            Assert.That(app.Group.GetGroupCount(), Is.EqualTo(oldGroups.Count - 1));
 
             List<GroupData> newGroups = app.Group.GetGroupList();
             oldGroups.RemoveAt(0);

@@ -78,6 +78,8 @@ namespace WebAddressBookTests
             }
         }
 
+        public string Id { get; set; }
+
     }
 
 }
