@@ -101,6 +101,13 @@ namespace WebAddressBookTests
         {
             return driver.FindElements(By.CssSelector("tr[name='entry']")).Count;
         }
+
+        public ContactHelper EditContactById(string id)
+        {
+            var row = driver.FindElement(By.XPath($"//tr[contains(@name, 'entry') and .//input[@value='{id}']]"));
+            row.FindElement(By.XPath(".//img[@alt='Edit']")).Click();
+            return this;
+        }
     }
     
     }

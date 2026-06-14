@@ -21,6 +21,13 @@ namespace WebAddressBookTests
         protected ContactHelper contactHelper;
         private static ThreadLocal<ApplicationManager> app = new ThreadLocal<ApplicationManager>();
 
+        public IWebDriver Driver
+        {
+            get 
+            { 
+                return driver; 
+            }
+        }
         private ApplicationManager()
         {
             driver = new ChromeDriver();
@@ -86,5 +93,6 @@ namespace WebAddressBookTests
                 return contactHelper;
             }
         }
+
     }
 }
