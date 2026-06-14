@@ -108,6 +108,21 @@ namespace WebAddressBookTests
             row.FindElement(By.XPath(".//img[@alt='Edit']")).Click();
             return this;
         }
+        public ContactHelper OpenViewPageById(string id)
+        {
+            var link = driver.FindElement(By.XPath($"//a[contains(@href, 'view.php?id={id}')]"));
+            link.Click();
+            return this;
+        }
+        public ContactData GetContactFromViewPage()
+        {
+            var contentDiv = driver.FindElement(By.Id("content"));
+            string fullNameRaw = contentDiv.FindElement(By.TagName("b")).Text.Trim();
+            var parts = fullNameRaw.Split(' ');
+            string firstname = parts[0];
+            string lastname = parts[1];
+            return new ContactData(firstname, lastname);
+        }
     }
     
     }

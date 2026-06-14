@@ -156,6 +156,7 @@
     <Compile Include="Tests\Contact\ContactComparison.cs" />
     <Compile Include="Tests\Contact\ContactDeleteTests.cs" />
     <Compile Include="Tests\Contact\ContactEditTests.cs" />
+    <Compile Include="Tests\Contact\ContactViewComparisonTest.cs" />
     <Compile Include="Tests\Group\GroupCreationTests.cs" />
     <Compile Include="Tests\Contact\ContactAddTests.cs" />
     <Compile Include="Tests\Group\GroupDeleteTests.cs" />
