@@ -12,15 +12,27 @@ namespace WebAddressBookTests
     [TestFixture]
     public class GroupDeleteTests : AuthTestBase
     {
+        public static IEnumerable<GroupData> RandomGroupDataProvider()
+        {
+            List<GroupData> groups = new List<GroupData>();
+            for (int i = 0; i < 5; i++)
+            {
+                groups.Add(new GroupData(GenerateRandomString(30))
+                {
+                    Header = GenerateRandomString(100),
+                    Footer = GenerateRandomString(100),
+                });
+            }
+            return groups;
+        }
 
-
-        [Test]
-        public void GroupDeleteTest()
+        [Test, TestCaseSource("RandomGroupDataProvider")]
+        public void GroupDeleteTest(GroupData group)
         {
             app.Navigator.GoToGroupsPage();
-            GroupData group = new GroupData("name1");
-            group.Header = "header1";
-            group.Footer = "footer1";
+         //   GroupData group = new GroupData("name1");
+           // group.Header = "header1";
+            //group.Footer = "footer1";
             if (!app.Group.IsAnyGroupSelected())
             {
                 app.Group.CreateGroup(group);

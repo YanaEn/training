@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace WebAddressBookTests
 {
+    [TestFixture]
     public class AuthTestBase : TestBase
     {
         [SetUp]

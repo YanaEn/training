@@ -13,15 +13,23 @@ namespace WebAddressBookTests
     public class ContactDeleteTest : AuthTestBase
     {
 
-
-        [Test]
-        public void ContactDeleteTests()
+        public static IEnumerable<ContactData> RandomContactDataProvider()
         {
-            ContactData contact1 = new ContactData("1112", "2223");
+            List<ContactData> contacts = new List<ContactData>();
+            for (int i = 0; i < 5; i++)
+            {
+                contacts.Add(new ContactData(GenerateRandomString(50), GenerateRandomString(50)));
+            }
+            return contacts;
+        }
+        [Test, TestCaseSource("RandomContactDataProvider")]
+        public void ContactDeleteTests(ContactData contact)
+        {
+          //  ContactData contact1 = new ContactData("1112", "2223");
             if (!app.Contact.IsAnyContactSelected())
             {
                 app.Navigator.GoToAddNewContact();
-                app.Contact.AddContact(contact1);
+                app.Contact.AddContact(contact);
                 app.Navigator.OpenHomePage();
             }
             List<ContactData> oldContacts = app.Contact.GetContactList();

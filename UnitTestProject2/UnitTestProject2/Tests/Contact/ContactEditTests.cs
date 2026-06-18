@@ -13,18 +13,29 @@ namespace WebAddressBookTests
     public class ContactEditTest : AuthTestBase
     {
 
-
-        [Test]
-        public void ContactEditTests()
+        public static IEnumerable<ContactData> RandomContactDataProvider()
         {
-            ContactData contact1 = new ContactData("1112", "2223");
-            ContactData contact2 = new ContactData("111", "222");
+            List<ContactData> contacts = new List<ContactData>();
+            for (int i = 0; i < 5; i++)
+            {
+                contacts.Add(new ContactData(GenerateRandomString(50), GenerateRandomString(50)));
+            }
+            return contacts;
+        }
+
+        [Test, TestCaseSource("RandomContactDataProvider")]
+        public void ContactEditTests(ContactData contact)
+        {
+          //  ContactData contact1 = new ContactData("1112", "2223");
+          //  ContactData contact2 = new ContactData("111", "222");
             if (!app.Contact.IsAnyContactSelected())
             {
                 app.Navigator.GoToAddNewContact();
-                app.Contact.AddContact(contact1);
+                app.Contact.AddContact(contact);
                 app.Navigator.OpenHomePage();
             }
+            ContactData contact2 = new ContactData(GenerateRandomString(20), GenerateRandomString(20));
+            
             List<ContactData> oldContacts = app.Contact.GetContactList();
             app.Contact.EditFirstContact(contact2);
             app.Navigator.OpenHomePage();
