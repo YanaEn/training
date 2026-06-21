@@ -16,23 +16,38 @@ namespace WebAddressBookTests
         [Test]
         public void CompareContactDataOnViewPage()
         {
-            ContactData contact1 = new ContactData("1112", "2223");
+
+            app.Navigator.OpenHomePage();
+            ContactData expectedContact = new ContactData("1112", "2223");
+            expectedContact.Address = "Address";
+            expectedContact.HomePhone = "111";
+            expectedContact.MobilePhone = "222";
+            expectedContact.WorkPhone = "333";
             if (!app.Contact.IsAnyContactSelected())
             {
                 app.Navigator.GoToAddNewContact();
-                app.Contact.AddContact(contact1);
+                app.Contact.AddContact(expectedContact);
                 app.Navigator.OpenHomePage();
             }
 
-            app.Navigator.OpenHomePage();
+            
             List<ContactData> contacts = app.Contact.GetContactList();
             ContactData contactFromTable = contacts[0];
             string id = contactFromTable.Id;
+            Console.WriteLine($"Проверяем контакт ID={id}: {contactFromTable}");
+
+
+            app.Contact.EditContactById(id);
+            ContactData contactFromFormPage = app.Contact.GetContactInformationFromForm(id);
+
             app.Navigator.OpenHomePage();
             app.Contact.OpenViewPageById(id);
             ContactData contactFromViewPage = app.Contact.GetContactFromViewPage();
-            Assert.That(contactFromViewPage.Firstname, Is.EqualTo(contactFromTable.Firstname));
-            Assert.That(contactFromViewPage.Lastname, Is.EqualTo(contactFromTable.Lastname));
+            string viewDataString = contactFromViewPage.GetConcatenatedData();
+            string formDataString = contactFromFormPage.GetConcatenatedData();
+            Assert.That(viewDataString, Is.EqualTo(formDataString));
+
+
         }
     }
 }

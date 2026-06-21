@@ -11,6 +11,10 @@ namespace WebAddressBookTests
         private string firstname;
         private string lastname;
         private string text;
+        public string Address { get; set; } = "";
+        public string HomePhone { get; set; } = "";
+        public string MobilePhone { get; set; } = "";
+        public string WorkPhone { get; set; } = "";
 
         public bool Equals(ContactData other)
         {
@@ -79,7 +83,12 @@ namespace WebAddressBookTests
         }
 
         public string Id { get; set; }
+        public string GetConcatenatedData()
+        {
+            return $"{Firstname}|{Lastname}|{Address}|{HomePhone}|{MobilePhone}|{WorkPhone}";
+        }
 
     }
+    
 
-}
+    }

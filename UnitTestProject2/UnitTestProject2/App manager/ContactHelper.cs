@@ -11,7 +11,7 @@ namespace WebAddressBookTests
 {
     public class ContactHelper : HelperBase
     {
-        public ContactHelper(IWebDriver driver) : base(driver) 
+        public ContactHelper(IWebDriver driver) : base(driver)
         {
         }
 
@@ -51,9 +51,9 @@ namespace WebAddressBookTests
         }
         public ContactHelper EditFirstContact(ContactData contact)
         {
-                OpenEditPage()
-                .Contact(contact)
-                .UpdateContact();
+            OpenEditPage()
+            .Contact(contact)
+            .UpdateContact();
             return this;
         }
         public ContactHelper AddContact(ContactData contact)
@@ -69,8 +69,8 @@ namespace WebAddressBookTests
             return this;
         }
 
-        
-        
+
+
         public bool IsAnyContactSelected()
         {
             return driver.FindElements(By.XPath("//img[@alt='Edit']")).Count > 0;
@@ -117,12 +117,54 @@ namespace WebAddressBookTests
         public ContactData GetContactFromViewPage()
         {
             var contentDiv = driver.FindElement(By.Id("content"));
-            string fullNameRaw = contentDiv.FindElement(By.TagName("b")).Text.Trim();
-            var parts = fullNameRaw.Split(' ');
-            string firstname = parts[0];
-            string lastname = parts[1];
-            return new ContactData(firstname, lastname);
+
+            var lines = contentDiv.Text.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
+
+            string fullNameRaw = lines[0].Trim();
+            var nameParts = fullNameRaw.Split(' ').Where(p => !string.IsNullOrEmpty(p)).ToArray();
+
+            string firstname = nameParts.Length > 0 ? nameParts[0] : "";
+            string lastname = nameParts.Length > 1 ? nameParts[1] : "";
+
+            string address = lines.Length > 1 ? lines[1].Trim() : "";
+
+            string homePhone = "";
+            string mobilePhone = "";
+            string workPhone = "";
+
+            foreach (var line in lines)
+            {
+                if (line.StartsWith("H:")) homePhone = line.Replace("H:", "").Trim();
+                if (line.StartsWith("M:")) mobilePhone = line.Replace("M:", "").Trim();
+                if (line.StartsWith("W:")) workPhone = line.Replace("W:", "").Trim();
+            }
+
+            return new ContactData(firstname, lastname)
+            {
+                Address = address,
+                HomePhone = homePhone,
+                MobilePhone = mobilePhone,
+                WorkPhone = workPhone
+            };
         }
+
+        public ContactData GetContactInformationFromForm(string id)
+        {
+            string firstname = driver.FindElement(By.Name("firstname")).GetAttribute("value");
+            string lastname = driver.FindElement(By.Name("lastname")).GetAttribute("value");
+            string address = driver.FindElement(By.Name("address")).GetAttribute("value");
+            string homePhone = driver.FindElement(By.Name("home")).GetAttribute("value");
+            string mobilePhone = driver.FindElement(By.Name("mobile")).GetAttribute("value");
+            string workPhone = driver.FindElement(By.Name("work")).GetAttribute("value");
+
+            return new ContactData(firstname, lastname)
+            {
+                Address = address,
+                HomePhone = homePhone,
+                MobilePhone = mobilePhone,
+                WorkPhone = workPhone
+            };
+        }
+
     }
-    
     }
