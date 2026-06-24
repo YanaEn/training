@@ -10,11 +10,15 @@ namespace WebAddressBookTests
     {
         private string firstname;
         private string lastname;
-        private string text;
+       // private string text;
         public string Address { get; set; } = "";
         public string HomePhone { get; set; } = "";
         public string MobilePhone { get; set; } = "";
         public string WorkPhone { get; set; } = "";
+
+        public ContactData()
+        {
+        }
 
         public bool Equals(ContactData other)
         {
