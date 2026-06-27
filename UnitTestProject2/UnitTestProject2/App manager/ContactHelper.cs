@@ -117,7 +117,6 @@ namespace WebAddressBookTests
         public ContactData GetContactFromViewPage()
         {
             var contentDiv = driver.FindElement(By.Id("content"));
-
             var lines = contentDiv.Text.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
 
             string fullNameRaw = lines[0].Trim();
@@ -126,7 +125,20 @@ namespace WebAddressBookTests
             string firstname = nameParts.Length > 0 ? nameParts[0] : "";
             string lastname = nameParts.Length > 1 ? nameParts[1] : "";
 
-            string address = lines.Length > 1 ? lines[1].Trim() : "";
+            string address = "";
+
+            for (int i = 1; i < lines.Length; i++)
+            {
+                string line = lines[i];
+
+                if (line.StartsWith("H:") || line.StartsWith("M:") || line.StartsWith("W:") || line.StartsWith("E:"))
+                    break;
+
+                if (!string.IsNullOrEmpty(address))
+                    address += " ";
+
+                address += line;
+            }
 
             string homePhone = "";
             string mobilePhone = "";
@@ -134,9 +146,10 @@ namespace WebAddressBookTests
 
             foreach (var line in lines)
             {
-                if (line.StartsWith("H:")) homePhone = line.Replace("H:", "").Trim();
-                if (line.StartsWith("M:")) mobilePhone = line.Replace("M:", "").Trim();
-                if (line.StartsWith("W:")) workPhone = line.Replace("W:", "").Trim();
+                string l = line.Trim();
+                if (l.StartsWith("H:")) homePhone = l.Substring(2).Trim();
+                else if (l.StartsWith("M:")) mobilePhone = l.Substring(2).Trim();
+                else if (l.StartsWith("W:")) workPhone = l.Substring(2).Trim();
             }
 
             return new ContactData(firstname, lastname)
