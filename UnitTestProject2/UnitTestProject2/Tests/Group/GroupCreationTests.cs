@@ -9,6 +9,7 @@ using System.Runtime.Remoting.Messaging;
 using System.Xml.Serialization;
 using System.Xml;
 using Newtonsoft.Json;
+using System.Linq;
 
 namespace WebAddressBookTests
 {
@@ -77,7 +78,14 @@ namespace WebAddressBookTests
             newGroups.Sort();
             //Assert.That(newGroups.Count, Is.EqualTo(oldGroups.Count));
             Assert.That(oldGroups, Is.EquivalentTo(newGroups));
-        }   
+        }
+        [Test]
+        public void TestDBConnectivity()
+        {
+            List<GroupData> fromUI = app.Group.GetGroupList();
+            List<GroupData> fromDb = GroupData.GetAll();
+
+        }
     }
 }
 

@@ -114,52 +114,35 @@ namespace WebAddressBookTests
             link.Click();
             return this;
         }
-        public ContactData GetContactFromViewPage()
+        public string GetContactFromViewPage(ContactData contact)
         {
-            var contentDiv = driver.FindElement(By.Id("content"));
-            var lines = contentDiv.Text.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
+            var lines = new List<string>();
 
-            string fullNameRaw = lines[0].Trim();
-            var nameParts = fullNameRaw.Split(' ').Where(p => !string.IsNullOrEmpty(p)).ToArray();
+            string fullName = $"{contact.Firstname} {contact.Lastname}".Trim();
+            if (!string.IsNullOrEmpty(fullName))
+                lines.Add(fullName);
 
-            string firstname = nameParts.Length > 0 ? nameParts[0] : "";
-            string lastname = nameParts.Length > 1 ? nameParts[1] : "";
-
-            string address = "";
-
-            for (int i = 1; i < lines.Length; i++)
+            if (!string.IsNullOrEmpty(contact.Address))
             {
-                string line = lines[i];
-
-                if (line.StartsWith("H:") || line.StartsWith("M:") || line.StartsWith("W:") || line.StartsWith("E:"))
-                    break;
-
-                if (!string.IsNullOrEmpty(address))
-                    address += " ";
-
-                address += line;
+                var addressLines = contact.Address.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
+                foreach (var line in addressLines)
+                {
+                    string trimmed = line.Trim();
+                    if (!string.IsNullOrEmpty(trimmed))
+                        lines.Add(trimmed);
+                }
             }
 
-            string homePhone = "";
-            string mobilePhone = "";
-            string workPhone = "";
+            if (!string.IsNullOrEmpty(contact.HomePhone))
+                lines.Add($"H: {contact.HomePhone}");
+            if (!string.IsNullOrEmpty(contact.MobilePhone))
+                lines.Add($"M: {contact.MobilePhone}");
+            if (!string.IsNullOrEmpty(contact.WorkPhone))
+                lines.Add($"W: {contact.WorkPhone}");
 
-            foreach (var line in lines)
-            {
-                string l = line.Trim();
-                if (l.StartsWith("H:")) homePhone = l.Substring(2).Trim();
-                else if (l.StartsWith("M:")) mobilePhone = l.Substring(2).Trim();
-                else if (l.StartsWith("W:")) workPhone = l.Substring(2).Trim();
-            }
-
-            return new ContactData(firstname, lastname)
-            {
-                Address = address,
-                HomePhone = homePhone,
-                MobilePhone = mobilePhone,
-                WorkPhone = workPhone
-            };
+            return string.Join("\n", lines);
         }
+
 
         public ContactData GetContactInformationFromForm(string id)
         {
@@ -178,6 +161,6 @@ namespace WebAddressBookTests
                 WorkPhone = workPhone
             };
         }
-
+       
     }
     }

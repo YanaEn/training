@@ -18,11 +18,13 @@ namespace WebAddressBookTests
         {
 
             app.Navigator.OpenHomePage();
+
             ContactData expectedContact = new ContactData("1112", "2223");
-            expectedContact.Address = "Address";
+            expectedContact.Address = "Line 1\nLine 2\nLine 3";
             expectedContact.HomePhone = "111";
             expectedContact.MobilePhone = "222";
             expectedContact.WorkPhone = "333";
+
             if (!app.Contact.IsAnyContactSelected())
             {
                 app.Navigator.GoToAddNewContact();
@@ -30,23 +32,41 @@ namespace WebAddressBookTests
                 app.Navigator.OpenHomePage();
             }
 
-            
-            List<ContactData> contacts = app.Contact.GetContactList();
-            ContactData contactFromTable = contacts[0];
-            string id = contactFromTable.Id;
-            Console.WriteLine($"Проверяем контакт ID={id}: {contactFromTable}");
+            var contacts = app.Contact.GetContactList();
+            string id = contacts[0].Id;
 
+            Console.WriteLine($"Проверяем контакт ID={id}");
 
             app.Contact.EditContactById(id);
-            ContactData contactFromFormPage = app.Contact.GetContactInformationFromForm(id);
+            ContactData contactFromForm = app.Contact.GetContactInformationFromForm(id);
+
+            string expectedViewString = app.Contact.GetContactFromViewPage(contactFromForm);
 
             app.Navigator.OpenHomePage();
             app.Contact.OpenViewPageById(id);
-            ContactData contactFromViewPage = app.Contact.GetContactFromViewPage();
-            string viewDataString = contactFromViewPage.GetConcatenatedData();
-            string formDataString = contactFromFormPage.GetConcatenatedData();
-            Assert.That(viewDataString, Is.EqualTo(formDataString));
 
+            var contentDiv = app.Driver.FindElement(By.Id("content"));
+            string actualViewStringRaw = contentDiv.Text;
+
+            string NormalizeToSingleSpaces(string input)
+            {
+                if (string.IsNullOrEmpty(input)) return input;
+
+                input = input.Replace("\n", " ").Replace("\r", " ").Replace("\t", " ");
+
+                while (input.Contains("  "))
+                {
+                    input = input.Replace("  ", " ");
+                }
+
+                return input.Trim();
+            }
+
+            string expectedNormalized = NormalizeToSingleSpaces(expectedViewString);
+            string actualNormalized = NormalizeToSingleSpaces(actualViewStringRaw);
+
+            Assert.That(actualNormalized, Is.EqualTo(expectedNormalized),
+                $"Строки не совпадают после нормализации!\n\nОжидалось:\n{expectedNormalized}\n\nПолучено:\n{actualNormalized}");
 
         }
     }
