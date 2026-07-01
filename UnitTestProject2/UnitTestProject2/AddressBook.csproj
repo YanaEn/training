@@ -198,10 +198,12 @@
     <Compile Include="App manager\NavigationHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests\AuthTestBase.cs" />
+    <Compile Include="Tests\ContactTestBase.cs" />
     <Compile Include="Tests\Contact\ContactComparison.cs" />
     <Compile Include="Tests\Contact\ContactDeleteTests.cs" />
     <Compile Include="Tests\Contact\ContactEditTests.cs" />
     <Compile Include="Tests\Contact\ContactViewComparisonTest.cs" />
+    <Compile Include="Tests\GroupTestBase.cs" />
     <Compile Include="Tests\Group\GroupCreationTests.cs" />
     <Compile Include="Tests\Contact\ContactAddTests.cs" />
     <Compile Include="Tests\Group\GroupDeleteTests.cs" />

@@ -64,7 +64,7 @@ namespace WebAddressBookTests
             this.firstname = firstname;
             this.lastname = lastname;
         }
-
+        [Column(Name = "firstname")]
         public string Firstname
         {
             get
@@ -76,6 +76,7 @@ namespace WebAddressBookTests
                 firstname = value;
             }
         }
+        [Column(Name = "lastname")]
         public string Lastname
         {
             get
@@ -87,14 +88,20 @@ namespace WebAddressBookTests
                 lastname = value;
             }
         }
-
+        [Column(Name = "id")]
         public string Id { get; set; }
         public string GetConcatenatedData()
         {
             return $"{Firstname}|{Lastname}|{Address}|{HomePhone}|{MobilePhone}|{WorkPhone}";
         }
 
-
+        public static List<ContactData> GetAll()
+        {
+            using (AddressBookDB db = new AddressBookDB())
+            {
+                return (from g in db.Contacts select g).ToList();
+            }
+        }
 
     }
     

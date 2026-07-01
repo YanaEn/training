@@ -29,7 +29,11 @@ namespace WebAddressBookTests
             Type(By.Name("lastname"), contact.Lastname);
             return this;
         }
-
+        public ContactHelper SelectContact(string id)
+        {
+            driver.FindElement(By.XPath("(//input[@name='selected[]' and @value='" + id + "'])")).Click();
+            return this;
+        }
         public ContactHelper OpenEditPage()
         {
             new WebDriverWait(driver, TimeSpan.FromSeconds(35))
@@ -49,9 +53,35 @@ namespace WebAddressBookTests
             contactCache = null;
             return this;
         }
+
+        public ContactHelper Remove(ContactData contact)
+        {
+            SelectContact(contact.Id)
+               .OpenEditPageSpecific(contact.Id)
+                .DeleteContact();
+            return this;
+        }
+
+        private ContactHelper OpenEditPageSpecific(string id)
+        {
+            string xpath = $"//tr[contains(@name, 'entry') and .//input[@value='{id}']]//img[@alt='Edit']";
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+                .Until(d => d.FindElement(By.XPath(xpath))).Click();
+
+            return this;
+        }
         public ContactHelper EditFirstContact(ContactData contact)
         {
             OpenEditPage()
+            .Contact(contact)
+            .UpdateContact();
+            return this;
+        }
+
+        public ContactHelper EditContact(ContactData contact)
+        {
+            SelectContact(contact.Id)
+            .OpenEditPageSpecific(contact.Id)
             .Contact(contact)
             .UpdateContact();
             return this;

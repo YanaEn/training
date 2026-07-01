@@ -14,7 +14,7 @@ using System.Linq;
 namespace WebAddressBookTests
 {
     [TestFixture]
-    public class GroupCreationTests : AuthTestBase
+    public class GroupCreationTests : GroupTestBase
     {
         public static IEnumerable<GroupData> RandomGroupDataProvider()
         {
@@ -66,13 +66,13 @@ namespace WebAddressBookTests
         public void GroupCreationTest(GroupData group)
         {
             app.Navigator.GoToGroupsPage();
-            List<GroupData> oldGroups = app.Group.GetGroupList();
-          //  GroupData group2 = new GroupData("name1");
+            List<GroupData> oldGroups = GroupData.GetAll();
+            //  GroupData group2 = new GroupData("name1");
             //group.Header = "header1";
             //group.Footer = "footer1";
             app.Group.CreateGroup(group);
             Assert.That(app.Group.GetGroupCount(), Is.EqualTo(oldGroups.Count + 1));
-            List<GroupData> newGroups = app.Group.GetGroupList();
+            List<GroupData> newGroups = GroupData.GetAll();
             oldGroups.Add(group);
             oldGroups.Sort();
             newGroups.Sort();

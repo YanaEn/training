@@ -11,7 +11,7 @@ namespace WebAddressBookTests
     [TestFixture]
     public class TestBase
     {
-
+        public static bool PERFORM_LONG_UI_CHECKS = true;
         protected ApplicationManager app;
 
 

@@ -13,7 +13,7 @@ namespace WebAddressBookTests
 {
 
     [TestFixture]
-    public class ContactAddTest : AuthTestBase
+    public class ContactAddTest : ContactTestBase
     {
 
         public static IEnumerable<ContactData> RandomContactDataProvider()
@@ -43,13 +43,13 @@ namespace WebAddressBookTests
         [Test, TestCaseSource("ContactDataFromJsonFile")]
     public void ContactAddTests(ContactData contact)
         {
-            List<ContactData> oldContacts = app.Contact.GetContactList();
-          //  ContactData contact1 = new ContactData("1112", "2223");
+            List<ContactData> oldContacts = ContactData.GetAll();
+            //  ContactData contact1 = new ContactData("1112", "2223");
             app.Navigator.GoToAddNewContact();
             app.Contact.AddContact(contact);
             app.Navigator.OpenHomePage();
             Assert.That(app.Contact.GetContactCount(), Is.EqualTo(oldContacts.Count + 1));
-            List<ContactData> newContacts = app.Contact.GetContactList();
+            List<ContactData> newContacts = ContactData.GetAll();
             oldContacts.Add(contact);
             oldContacts.Sort();
             newContacts.Sort();

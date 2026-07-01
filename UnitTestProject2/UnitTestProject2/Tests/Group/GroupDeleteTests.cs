@@ -10,7 +10,7 @@ using System.Threading;
 namespace WebAddressBookTests
 {
     [TestFixture]
-    public class GroupDeleteTests : AuthTestBase
+    public class GroupDeleteTests : GroupTestBase
     {
         public static IEnumerable<GroupData> RandomGroupDataProvider()
         {
@@ -39,16 +39,22 @@ namespace WebAddressBookTests
                 
             }
             app.Navigator.GoToGroupsPage();
-            List<GroupData> oldGroups = app.Group.GetGroupList();
-            app.Group.DeleteFirstGroup();
+            //  List<GroupData> oldGroups = app.Group.GetGroupList();
+            List<GroupData> oldGroups = GroupData.GetAll();
+            GroupData toBeRemoved = oldGroups[0];
+            // app.Group.DeleteFirstGroup();
+            app.Group.Remove(toBeRemoved);
             Assert.That(app.Group.GetGroupCount(), Is.EqualTo(oldGroups.Count - 1));
 
-            List<GroupData> newGroups = app.Group.GetGroupList();
+            //List<GroupData> newGroups = app.Group.GetGroupList();
+            List<GroupData> newGroups = GroupData.GetAll();
             oldGroups.RemoveAt(0);
             oldGroups.Sort();
             newGroups.Sort();
             Assert.That(oldGroups, Is.EquivalentTo(newGroups));
+
         }
+
     }
 }
 

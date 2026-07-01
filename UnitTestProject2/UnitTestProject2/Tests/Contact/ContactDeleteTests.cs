@@ -10,7 +10,7 @@ using System.Threading;
 namespace WebAddressBookTests
 {
     [TestFixture]
-    public class ContactDeleteTest : AuthTestBase
+    public class ContactDeleteTest : ContactTestBase
     {
 
         public static IEnumerable<ContactData> RandomContactDataProvider()
@@ -32,11 +32,14 @@ namespace WebAddressBookTests
                 app.Contact.AddContact(contact);
                 app.Navigator.OpenHomePage();
             }
-            List<ContactData> oldContacts = app.Contact.GetContactList();
-            app.Contact.DeleteFirstContact();
+            List<ContactData> oldContacts = ContactData.GetAll();
+            ContactData toBeRemoved = oldContacts[0];
+
+            app.Contact.Remove(toBeRemoved);
+           // app.Contact.DeleteFirstContact();
             app.Navigator.OpenHomePage();
             Assert.That(app.Contact.GetContactCount(), Is.EqualTo(oldContacts.Count - 1));
-            List<ContactData> newContacts = app.Contact.GetContactList();
+            List<ContactData> newContacts = ContactData.GetAll();
             oldContacts.RemoveAt(0);
             oldContacts.Sort();
             newContacts.Sort();
